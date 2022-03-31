@@ -1,3 +1,10 @@
+# GML-in-cpp
+This is STRONGLY dependent on YAL's repo "function_get_address", which allowed you to get the addresses of GML-functions in runtime.
+This right here is me taking his work and expanding it to present it in a 'less hacky way'.
+
+Yes, this allows you to use GML-code in C++
+Original readme can be found below because I don't wanna reinvent the wheel.
+
 # function_get_address
 Supported versions:
 
