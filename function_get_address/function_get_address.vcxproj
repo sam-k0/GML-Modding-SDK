@@ -180,6 +180,9 @@
   <ItemGroup>
     <ResourceCompile Include="function_get_address.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Idle" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

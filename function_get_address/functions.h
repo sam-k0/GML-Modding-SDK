@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   functions.h
+ * \brief  GML-namespace functions are defined here.
+ * 
+ * \author sam-k0
+ * \date   March 2022
+ *********************************************************************/
 #pragma once
 #include "gml.h"
 
