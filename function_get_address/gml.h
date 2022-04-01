@@ -179,12 +179,12 @@ struct GMLClosure {
 struct GMLAddressTable
 {
 	// Variable definitions
-	std::map<const char* , GMLClosure* > *AddressMap = NULL; // Pointer to a map holding <pointers to addresses , strings>
+	std::map<std::string , GMLClosure* > *AddressMap = NULL; // Pointer to a map holding <pointers to addresses , strings>
 	
 	// Constructor
 	GMLAddressTable()
 	{
-		AddressMap = new std::map<const char* ,GMLClosure* >; // Allocate the map
+		AddressMap = new std::map<std::string , GMLClosure* >; // Allocate the map
 		std::cout << "Created GMLAddr Table." << std::endl;
 	}
 
@@ -197,7 +197,7 @@ struct GMLAddressTable
 	}
 
 	// Functions
-	bool functionExists(const char* key) // Checks if there already is a given entry for a specified function
+	bool functionExists(std::string key) // Checks if there already is a given entry for a specified function
 	{
 		if (AddressMap == NULL)
 		{
@@ -223,7 +223,7 @@ struct GMLAddressTable
 		}
 	}
 
-	GMLClosure* getFunction(const char* key) // Returns Address to the requested function or NULL
+	GMLClosure* getFunction(std::string key) // Returns Address to the requested function or NULL
 	{
 		if (functionExists(key))
 		{
@@ -235,15 +235,27 @@ struct GMLAddressTable
 	
 	// Adds a new function to the map
 	// Returns true (Could be added), false (Already exists)
-	bool addFunction(const char* key, GMLClosure* addr)
+	bool addFunction(std::string key, GMLClosure* addr)
 	{
 		if (functionExists(key) || AddressMap == NULL)
 		{
 			return false; // entry already exists
 		}
 
-		AddressMap->insert(std::pair<const char*, GMLClosure*>(key, addr));
+		AddressMap->insert(std::pair<std::string, GMLClosure*>(key, addr));
 		return true;
+	}
+
+	void printAllFunctions()
+	{
+
+		for (auto const& x : *AddressMap)
+		{
+			std::cout << x.first  // string (key)
+				<< ':'
+				<< x.second // string's value 
+				<< std::endl;
+		}
 	}
 };
 
