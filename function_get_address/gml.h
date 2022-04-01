@@ -6,6 +6,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <map>
 #define dllx extern "C" __declspec(dllexport)
 #define gmtrue 1.0
 #define gmfalse 0.0
@@ -177,14 +178,72 @@ struct GMLClosure {
 // Stores all pointers to functions
 struct GMLAddressTable
 {
-	GMLClosure* instance_create_addr = NULL;
-	GMLClosure* show_message_addr = NULL;
-	GMLClosure* variable_global_set = NULL;
-
-	// Empty
+	// Variable definitions
+	std::map<const char* , GMLClosure* > *AddressMap = NULL; // Pointer to a map holding <pointers to addresses , strings>
+	
+	// Constructor
 	GMLAddressTable()
 	{
+		AddressMap = new std::map<const char* ,GMLClosure* >; // Allocate the map
 		std::cout << "Created GMLAddr Table." << std::endl;
+	}
+
+	~GMLAddressTable()  // Override default destructor because of heap allocation
+	{
+		if(AddressMap != NULL)
+		{
+			delete AddressMap;
+		}
+	}
+
+	// Functions
+	bool functionExists(const char* key) // Checks if there already is a given entry for a specified function
+	{
+		if (AddressMap == NULL)
+		{
+			return false;
+		}
+		if (AddressMap->count(key) > 0) 
+		{
+			// Key entry exists
+			// Check if key is bad
+			if (AddressMap->at(key) != NULL)
+			{
+				std::cout << "Found entry for function " << key << std::endl;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	GMLClosure* getFunction(const char* key) // Returns Address to the requested function or NULL
+	{
+		if (functionExists(key))
+		{
+			return AddressMap->at(key);
+		}
+		return NULL;
+	}
+
+	
+	// Adds a new function to the map
+	// Returns true (Could be added), false (Already exists)
+	bool addFunction(const char* key, GMLClosure* addr)
+	{
+		if (functionExists(key) || AddressMap == NULL)
+		{
+			return false; // entry already exists
+		}
+
+		AddressMap->insert(std::pair<const char*, GMLClosure*>(key, addr));
+		return true;
 	}
 };
 
