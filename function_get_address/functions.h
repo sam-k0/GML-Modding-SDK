@@ -54,6 +54,22 @@ namespace gml {
 		func->ncall(result, sizeof(args), args);
 		return gmtrue;
 	}
+
+	// Calls a function by the specified key
+	/**
+	 * This is used for directly calling function from the map.
+	 */
+	gmint call_function(const char* key, GMLVar* args)
+	{
+		GMLClosure* func = gmlAddresses->getFunction(key);
+		GMLVar result = 1;
+
+		if (func != NULL)
+		{
+			func->ncall(result, sizeof(args), args);
+		}
+		return gmtrue;
+	}
 };
 
 
