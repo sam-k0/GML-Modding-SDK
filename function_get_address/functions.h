@@ -12,6 +12,65 @@
 // GML - Functions
 namespace gml {
 	
+#pragma region DS_LISTS
+
+	gmint ds_list_create() {
+		GMLVar result = 1;
+		GMLClosure* func = gmlAddresses->getFunction("ds_list_create");
+		func->ncall(result, 0, NULL);
+		return result.getReal();
+	}
+
+	gmint ds_list_destroy(gmint id) {
+		GMLVar result = 1;
+		GMLVar args[] = { id };
+		GMLClosure* func = gmlAddresses->getFunction("ds_list_destroy");
+		func->ncall(result, sizeof(args), args);
+		return result.getReal();
+	}
+
+	gmint ds_list_clear(gmint id) {
+		GMLVar result = 1;
+		GMLVar args[] = { id };
+		GMLClosure* func = gmlAddresses->getFunction("ds_list_clear");
+		func->ncall(result, sizeof(args), args);
+		return result.getReal();
+	}
+
+	gmint ds_list_empty(gmint id) {
+		GMLVar result = 1;
+		GMLVar args[] = { id };
+		GMLClosure* func = gmlAddresses->getFunction("ds_list_empty");
+		func->ncall(result, sizeof(args), args);
+		return result.getReal();
+	}
+
+	gmint ds_list_size(gmint id) {
+		GMLVar result = 1;
+		GMLVar args[] = { id };
+		GMLClosure* func = gmlAddresses->getFunction("ds_list_size");
+		func->ncall(result, sizeof(args), args);
+		return result.getReal();
+	}
+
+	gmint ds_list_add(gmint id, GMLVar val) {
+		GMLVar result = 1;
+		GMLVar args[] = { id, val };
+		GMLClosure* func = gmlAddresses->getFunction("ds_list_add");
+		func->ncall(result, sizeof(args), args);
+		return result.getReal();
+	}
+
+	gmint ds_list_set(gmint id, gmint pos, GMLVar val) {
+		GMLVar result = 1;
+		GMLVar args[] = { id, pos, val };
+		GMLClosure* func = gmlAddresses->getFunction("ds_list_set");
+		func->ncall(result, sizeof(args), args);
+		return result.getReal();
+	}
+
+#pragma endregion DS_LISTS
+
 	gmobject instance_create(double x, double y, gmobject obj)
 	{
 		GMLVar result = 1;
