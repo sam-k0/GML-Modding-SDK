@@ -179,7 +179,7 @@ struct GMLClosure {
 struct GMLAddressTable
 {
 	// Variable definitions
-	std::map<std::string , GMLClosure* > *AddressMap = NULL; // Pointer to a map holding <pointers to addresses , strings>
+	std::map<std::string , GMLClosure*> *AddressMap = NULL; // Pointer to a map holding <pointers to addresses , strings>
 	
 	// Constructor
 	GMLAddressTable()
@@ -266,3 +266,4 @@ bool isdef(GMLClosure* c)
 
 // All addresses will be stored here
 GMLAddressTable* gmlAddresses = new GMLAddressTable();
+

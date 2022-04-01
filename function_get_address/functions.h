@@ -11,7 +11,7 @@
 
 // GML - Functions
 namespace gml {
-
+	
 	gmobject instance_create(double x, double y, gmobject obj)
 	{
 		GMLVar result = 1;
