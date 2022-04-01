@@ -12,7 +12,7 @@
 // GML - Functions
 namespace gml {
 
-	gmint instance_create(double x, double y, gmobject obj)
+	gmobject instance_create(double x, double y, gmobject obj)
 	{
 		GMLVar result = 1;
 		GMLVar args[] = { x, y, obj };
