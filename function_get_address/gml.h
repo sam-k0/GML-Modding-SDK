@@ -180,7 +180,8 @@ struct GMLAddressTable
 {
 	// Variable definitions
 	std::map<std::string , GMLClosure*> *AddressMap = NULL; // Pointer to a map holding <pointers to addresses , strings>
-	
+	bool doneInitializing = false;
+
 	// Constructor
 	GMLAddressTable()
 	{
@@ -223,6 +224,7 @@ struct GMLAddressTable
 		}
 	}
 
+	// Returns the Address or NULL for the given function 
 	GMLClosure* getFunction(std::string key) // Returns Address to the requested function or NULL
 	{
 		if (functionExists(key))
@@ -232,7 +234,6 @@ struct GMLAddressTable
 		return NULL;
 	}
 
-	
 	// Adds a new function to the map
 	// Returns true (Could be added), false (Already exists)
 	bool addFunction(std::string key, GMLClosure* addr)

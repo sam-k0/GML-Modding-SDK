@@ -1,7 +1,7 @@
 /// @author YellowAfterlife and sam-k0
 #include "stdafx.h"
 #include "functions.h"
-
+#define FUNCTION_NOT_FOUND ""
 // Init function addresses
 /**
  * This part initializes the pointers to functions stored in gmlAddresses (GMAddressTable)
@@ -21,6 +21,40 @@ dllx gmbool init_function_address(const char* key, GMLClosure* address)
 	return gmfalse;
 }
 
+
+/**
+ * This is called by the initialization script.
+ * Do not call this manually
+ */
+dllx gmbool init_function_done()
+{
+	gmlAddresses->doneInitializing = true;
+	return gmtrue;
+}
+
+dllx char* get_function_address(const char* key)
+{
+	if (gmlAddresses->doneInitializing)
+	{
+		GMLClosure* res = gmlAddresses->getFunction(std::string(key));
+		if (res == NULL)
+		{
+			return FUNCTION_NOT_FOUND;
+		}
+		else
+		{
+			const char* addr = (const char*)res;
+			std::cout << "Returning addr " << addr << std::endl;
+			std::string saddr = std::string(addr);
+
+			return &saddr[0];
+		}
+	}
+	else
+	{
+		return FUNCTION_NOT_FOUND;
+	}
+}
 
 #pragma region Specific functions 
 
