@@ -7,6 +7,8 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include "gms.h"
+#include "config.h"
 #define dllx extern "C" __declspec(dllexport)
 #define gmtrue 1.0
 #define gmfalse 0.0
@@ -265,6 +267,8 @@ bool isdef(GMLClosure* c)
 	return !(c == NULL);
 }
 
+// TODO: This is really janky, add some dllexport shen.
+// https://social.msdn.microsoft.com/Forums/vstudio/en-US/9780816c-33c2-4910-8e34-5074f801b9ca/can-you-share-global-variables-between-a-dll-and-a-calling-program?forum=vcgeneral
 // All addresses will be stored here
 GMLAddressTable* gmlAddresses = new GMLAddressTable();
 

@@ -32,7 +32,7 @@ dllx gmbool init_function_done()
 	return gmtrue;
 }
 
-dllx char* get_function_address(const char* key)
+dllx const char* get_function_address(const char* key)
 {
 	if (gmlAddresses->doneInitializing)
 	{
@@ -45,9 +45,7 @@ dllx char* get_function_address(const char* key)
 		{
 			const char* addr = (const char*)res;
 			std::cout << "Returning addr " << addr << std::endl;
-			std::string saddr = std::string(addr);
-
-			return &saddr[0];
+			return addr;
 		}
 	}
 	else
