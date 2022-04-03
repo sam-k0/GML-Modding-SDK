@@ -3,6 +3,7 @@
 #include "functions.h"
 #define FUNCTION_NOT_FOUND ""
 // Init function addresses
+#ifdef NATIVE_GAME_SDK
 /**
  * This part initializes the pointers to functions stored in gmlAddresses (GMAddressTable)
  * I thought well maybe it's smarter to just have 1 function for everything LOL
@@ -21,7 +22,6 @@ dllx gmbool init_function_address(const char* key, GMLClosure* address)
 	return gmfalse;
 }
 
-
 /**
  * This is called by the initialization script.
  * Do not call this manually
@@ -31,6 +31,8 @@ dllx gmbool init_function_done()
 	gmlAddresses->doneInitializing = true;
 	return gmtrue;
 }
+#endif
+
 
 dllx const char* get_function_address(const char* key)
 {
@@ -67,12 +69,10 @@ dllx gmbool printAll()
 	return gmtrue;
 }
 
-
-
 // This will hopefully create a new object of type obj at 32,32
 dllx gmbool show_debug_message_a(const char* str)
 {
-	gml::show_debug_message(std::string(str));
+	gml::show_message(std::string(str));
 	return gmtrue;
 }
 
@@ -114,3 +114,70 @@ dllx double test_create(GMLClosure* instance_create, GMLClosure* variable_global
 	return result.getReal();
 }
 #pragma endregion
+
+#ifndef NATIVE_GAME_SDK
+// The code here is compiled when using modding config
+bool executePatching()
+{
+	gml::show_message("Hello from C!");
+	return true;
+}
+
+// Checks wether the DLL in the game has already finished loading
+int address_table_loaded()
+{
+	if (gmlAddresses == NULL)
+	{
+		return -1;
+	}
+	else
+	{
+		if (gmlAddresses->doneInitializing)
+		{
+			return 0;
+		}
+		return -2;
+	}
+
+}
+#endif //Native game sdk
+
+/**
+ * Entry point for the DLL.
+ */
+BOOL APIENTRY DllMain(HMODULE hModule,
+	DWORD  ul_reason_for_call,
+	LPVOID lpReserved
+)
+{
+	int res;
+	switch (ul_reason_for_call)
+	{
+	case DLL_PROCESS_ATTACH: // Do the thing here if necessary
+
+#ifdef NATIVE_GAME_SDK
+		std::cout << "Loaded NATIVE" << std::endl;
+#else
+		std::cout << "Loaded as MODDED" << std::endl;
+		std::cout << "Native DLL returned code " << address_table_loaded() << std::endl;
+		// Call the script
+		res = address_table_loaded();
+		MessageBoxA(0, std::string("RES is " + res).c_str(), "OK", MB_OK);
+		if (res == 0)
+		{
+			MessageBoxA(0, "Address table success!", "yep", MB_OK);
+			std::cout << "Found export address table!" << std::endl;
+			executePatching();
+		}
+		
+
+#endif // !NATIVE_GAME_SDK
+
+	case DLL_THREAD_ATTACH:
+	case DLL_THREAD_DETACH:
+	case DLL_PROCESS_DETACH:
+		break;
+	}
+	return TRUE;
+}
+

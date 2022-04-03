@@ -9,6 +9,7 @@
 #include "gml.h"
 
 
+
 // GML - Functions
 namespace gml {
 	
@@ -114,6 +115,19 @@ namespace gml {
 		return gmtrue;
 	}
 
+	gmint show_message(std::string s)
+	{
+		GMLVar result = 1;
+		GMLVar args[] = { s.c_str() };
+		GMLClosure* func = gmlAddresses->getFunction("show_message");
+		if (func == NULL)
+		{
+			std::cout << "ERROR! Function address not initialized!" << "show_message" << std::endl;
+			return gmfalse;
+		}
+		func->ncall(result, sizeof(args), args);
+		return result.getReal();
+	}
 	// Calls a function by the specified key
 	/**
 	 * This is used for directly calling function from the map.
@@ -130,6 +144,7 @@ namespace gml {
 		return result.getReal();
 	}
 };
+
 
 
 

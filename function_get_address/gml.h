@@ -270,5 +270,8 @@ bool isdef(GMLClosure* c)
 // TODO: This is really janky, add some dllexport shen.
 // https://social.msdn.microsoft.com/Forums/vstudio/en-US/9780816c-33c2-4910-8e34-5074f801b9ca/can-you-share-global-variables-between-a-dll-and-a-calling-program?forum=vcgeneral
 // All addresses will be stored here
-GMLAddressTable* gmlAddresses = new GMLAddressTable();
-
+#ifdef NATIVE_GAME_SDK
+__declspec(dllexport) GMLAddressTable * gmlAddresses = new GMLAddressTable();
+#else 
+__declspec(dllimport) GMLAddressTable * gmlAddresses;
+#endif //NATIVE_GAME_SDK
