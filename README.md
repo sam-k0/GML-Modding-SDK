@@ -1,5 +1,12 @@
-# GML-in-cpp
-This is STRONGLY dependent on YAL's repo "function_get_address (https://github.com/YAL-GameMaker/function_get_address)", which allowed you to get the addresses of GML-functions in runtime.
+# GML-modding-SDK
+## Huh?
+Yep. This is (becoming) an extension for making games made in GameMaker moddable!
+
+You will be able to mod any game that includes this extension in runtime via DLL-injection.
+
+## Information
+This is STRONGLY dependent on YAL's repo "function_get_address (https://github.com/YAL-GameMaker/function_get_address)", 
+which allowed you to get the addresses of GML-functions in runtime.
 This right here is me taking his work and expanding it to present it in a 'less hacky way'.
 *Currently WIP and more like a proof-of-concept*
 
