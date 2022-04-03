@@ -1,4 +1,4 @@
-# GML-modding-SDK
+# GML-Modding-SDK
 ## Huh?
 Yep. This is (becoming) an extension for making games made in GameMaker moddable!
 
