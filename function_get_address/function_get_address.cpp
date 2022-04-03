@@ -2,8 +2,8 @@
 #include "stdafx.h"
 #include "functions.h"
 #define FUNCTION_NOT_FOUND ""
-// Init function addresses
-#ifdef NATIVE_GAME_SDK
+
+#ifdef NATIVE_GAME_SDK // We do not need this code for "just modding"
 /**
  * This part initializes the pointers to functions stored in gmlAddresses (GMAddressTable)
  * I thought well maybe it's smarter to just have 1 function for everything LOL
@@ -33,7 +33,7 @@ dllx gmbool init_function_done()
 }
 #endif
 
-
+// Get the address of a saved function
 dllx const char* get_function_address(const char* key)
 {
 	if (gmlAddresses->doneInitializing)
@@ -55,6 +55,7 @@ dllx const char* get_function_address(const char* key)
 		return FUNCTION_NOT_FOUND;
 	}
 }
+
 
 #pragma region Specific functions 
 
@@ -115,9 +116,10 @@ dllx double test_create(GMLClosure* instance_create, GMLClosure* variable_global
 }
 #pragma endregion
 
+// Execute patching & checking address table loading
 #ifndef NATIVE_GAME_SDK
 // The code here is compiled when using modding config
-bool executePatching()
+bool executePatching() // This is where your patch code goes.
 {
 	gml::show_message("Hello from C!");
 	return true;
@@ -140,39 +142,43 @@ int address_table_loaded()
 	}
 
 }
-#endif //Native game sdk
+#endif //NATIVE_GAME_SDK
 
 /**
  * Entry point for the DLL.
  */
-BOOL APIENTRY DllMain(HMODULE hModule,
-	DWORD  ul_reason_for_call,
-	LPVOID lpReserved
-)
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
-	int res;
+	int res; // Result of trying to load the address table
+
+
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH: // Do the thing here if necessary
-
-#ifdef NATIVE_GAME_SDK
-		std::cout << "Loaded NATIVE" << std::endl;
-#else
-		std::cout << "Loaded as MODDED" << std::endl;
-		std::cout << "Native DLL returned code " << address_table_loaded() << std::endl;
-		// Call the script
-		res = address_table_loaded();
-		MessageBoxA(0, std::string("RES is " + res).c_str(), "OK", MB_OK);
-		if (res == 0)
+		std::cout << "Attaching GML-Modding-SDK " << std::endl
+				  << "Compiled at " __TIMESTAMP__ << std::endl;
+		#ifdef NATIVE_GAME_SDK // This changes with configuration: config.h
 		{
-			MessageBoxA(0, "Address table success!", "yep", MB_OK);
-			std::cout << "Found export address table!" << std::endl;
-			executePatching();
+			std::cout << "Loaded NATIVE" << std::endl;
 		}
-		
-
-#endif // !NATIVE_GAME_SDK
-
+		#else // Modding config
+		{
+			std::cout << "Loaded as MODDED" << std::endl;
+			std::cout << "Native DLL returned code " << address_table_loaded() << std::endl;
+			// Call the script
+			res = address_table_loaded();
+			if (res == 0) // No error when loading addr table
+			{
+				std::cout << "Found export address table!" << std::endl;
+				executePatching(); // Execute the patching method
+			}
+			else // Failed to load address table, abort loading
+			{
+				std::cout << "Address Table failed to load. Exit with Code " << res << std::endl;
+				return FALSE;
+			}
+		}
+		#endif //NATIVE_GAME_SDK
 	case DLL_THREAD_ATTACH:
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:

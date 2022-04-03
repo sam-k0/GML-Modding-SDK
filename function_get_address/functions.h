@@ -8,8 +8,6 @@
 #pragma once
 #include "gml.h"
 
-
-
 // GML - Functions
 namespace gml {
 	
@@ -72,6 +70,7 @@ namespace gml {
 
 #pragma endregion DS_LISTS
 
+#pragma region INSTANCE
 	gmobject instance_create(double x, double y, gmobject obj)
 	{
 		GMLVar result = 1;
@@ -83,8 +82,25 @@ namespace gml {
 			return gmfalse;
 		}
 		func->ncall(result, sizeof(args), args);
-		return result.getReal(); 
+		return result.getReal();
 	}
+
+	GMLVar variable_instance_get(gmobject id, const char* var)
+	{
+		GMLVar result = 1;
+		GMLVar args[] = { id, var };
+		GMLClosure* func = gmlAddresses->getFunction("variable_instance_get");
+		if (func == NULL)
+		{
+			std::cout << "ERROR! Function address not initialized!" << "variable_instance_get" << std::endl;
+			return gmfalse;
+		}
+		func->ncall(result, sizeof(args), args);
+		return result;
+	}
+
+#pragma endregion INSTANCE
+	
 
 	gmint show_debug_message(std::string s)
 	{
