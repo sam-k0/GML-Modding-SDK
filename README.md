@@ -3,13 +3,13 @@
 Yep. This is (becoming) an extension for making games made in GameMaker moddable!
 
 You will be able to mod any game that includes this extension in runtime via DLL-injection.
-## I want to make my game moddable! How?
+## (Game Developer) I want to make my game moddable! How?
 Currently, it is as easy as drag-and dropping the extension package (which can be found in the releases tab)
 onto the GameMaker IDE window and importing everything
 
-## I want to mod a game using this SDK!
+## (Modder) I want to mod a game using this SDK!
 This requires you to understand C++.
-I made a namespace called gml:: which holds the functions from GameMaker.
+I made a namespace called `gml::` which holds the functions from GameMaker.
 
 The APIENTRY functions contains a method called `executePatching()` which gets called on-injection of the DLL.
 You can either put your code there OR create a thread that runs the code parallel to the game.
