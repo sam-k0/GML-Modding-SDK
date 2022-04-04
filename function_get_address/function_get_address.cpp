@@ -121,7 +121,9 @@ dllx double test_create(GMLClosure* instance_create, GMLClosure* variable_global
 // The code here is compiled when using modding config
 bool executePatching() // This is where your patch code goes.
 {
-	gml::show_message("Hello from C!");
+	gml::show_message("Hello from C!"); 
+	GMLVar val = gml::variable_instance_get(100001, "sus"); // Instance IDs are pretty handy
+	gml::show_debug_message("Sus value is " + to_string(val.getReal()));
 	return true;
 }
 
@@ -155,26 +157,27 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH: // Do the thing here if necessary
-		std::cout << "Attaching GML-Modding-SDK " << std::endl
-				  << "Compiled at " __TIMESTAMP__ << std::endl;
+		std::cout << "---GML-Modding-SDK---"
+				  << "[GMLMOS] Compiled at " __TIMESTAMP__ << std::endl;
 		#ifdef NATIVE_GAME_SDK // This changes with configuration: config.h
 		{
-			std::cout << "Loaded NATIVE" << std::endl;
+			std::cout << "[GMLMOS] Loaded NATIVE" << std::endl;
 		}
 		#else // Modding config
 		{
-			std::cout << "Loaded as MODDED" << std::endl;
-			std::cout << "Native DLL returned code " << address_table_loaded() << std::endl;
+			
+			std::cout << "[GMLMOS] Loaded DLL as MOD" << std::endl;
+			std::cout << "[GMLMOS] Connection Code: " << address_table_loaded() << " (0 is success)" << std::endl;
 			// Call the script
 			res = address_table_loaded();
 			if (res == 0) // No error when loading addr table
 			{
-				std::cout << "Found export address table!" << std::endl;
+				std::cout << "[GMLMOS] AddressTable found!" << std::endl;
 				executePatching(); // Execute the patching method
 			}
 			else // Failed to load address table, abort loading
 			{
-				std::cout << "Address Table failed to load. Exit with Code " << res << std::endl;
+				std::cout << "[GMLMOS] AddressTable failed to load. Exit with Code " << res << std::endl;
 				return FALSE;
 			}
 		}

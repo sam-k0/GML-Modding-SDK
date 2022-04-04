@@ -85,6 +85,20 @@ namespace gml {
 		return result.getReal();
 	}
 
+	gmint instance_destroy(double x, double y, gmobject obj)
+	{
+		GMLVar result = 1;
+		GMLVar args[] = { x, y, obj };
+		GMLClosure* func = gmlAddresses->getFunction("instance_create");
+		if (func == NULL)
+		{
+			std::cout << "ERROR! Function address not initialized!" << "instance_create" << std::endl;
+			return gmfalse;
+		}
+		func->ncall(result, sizeof(args), args);
+		return result.getReal();
+	}
+
 	GMLVar variable_instance_get(gmobject id, const char* var)
 	{
 		GMLVar result = 1;

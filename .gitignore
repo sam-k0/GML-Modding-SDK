@@ -8,7 +8,7 @@
 */#backups/
 */Debug/
 */Release/
-Debug/
+#Debug/
 Release/
 *.sdf
 help.rtf
