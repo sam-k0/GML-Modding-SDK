@@ -14,11 +14,11 @@ WARNING: If your game relies on structs, I do not recommend downgrading.
 ## Step 1: Getting the thing
 To import the SDK, just head to the `releases tab` on the right side of the page, download the newest version and import it into your game.
 
-    IMAGE 1
+![Step1](https://cdn.discordapp.com/attachments/701418364622340178/965616664483872798/1.jpg)
 
-Also, make sure to import the `scripts` from the extension
+Also, make sure to import the `scripts` from the extension (GMS 1.4: Double click the extension)
 
-    image 2
+![Step2](https://cdn.discordapp.com/attachments/701418364622340178/965616664727150642/2.jpg)
 
 Now, your project is set up! 
 
@@ -30,7 +30,7 @@ To configure this, head to the `scripts -> initializing -> populateAddresses` sc
 
 You want to put all functions the mods should be able to use into this script. Syntax is given.
 
-     IMAGE 3
+![Step3](https://cdn.discordapp.com/attachments/701418364622340178/965616664920072262/3.jpg)
 
 ## Step 3: How it works
 
@@ -58,6 +58,8 @@ so it looks like
 This flips the switch on the project and now indicates that you are indeed using this to develop a mod for a game!
 
 If you are leaving this active, the project will be built as the GameMaker Extension DLL, which is not what we want in this case.
+
+![Step3](https://cdn.discordapp.com/attachments/701418364622340178/965616665175949352/4.jpg)
 
 ## Step 2: Closer look
 
