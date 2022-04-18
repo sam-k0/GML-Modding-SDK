@@ -1,4 +1,7 @@
 # GML-Modding-SDK
+
+Tutorial can be found in `Tutorial` !!!
+
 ## Huh?
 Yep. This is (becoming) an extension for making games made in GameMaker moddable!
 
