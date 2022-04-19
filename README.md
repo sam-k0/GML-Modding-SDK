@@ -1,6 +1,8 @@
 # GML-Modding-SDK
 
 Tutorial can be found in `Tutorial` !!!
+Or as a video here:
+https://www.youtube.com/watch?v=hQ7mBLIGf6U
 
 ## Huh?
 Yep. This is (becoming) an extension for making games made in GameMaker moddable!
