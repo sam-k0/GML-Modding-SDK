@@ -121,9 +121,16 @@ dllx double test_create(GMLClosure* instance_create, GMLClosure* variable_global
 // The code here is compiled when using modding config
 bool executePatching() // This is where your patch code goes.
 {
-	gml::show_message("Hello from C!"); 
-	GMLVar val = gml::variable_instance_get(100001, "sus"); // Instance IDs are pretty handy
+	gml::show_message("Hello from C++!");
+	GMLVar val = gml::variable_instance_get(100000, "sus");
 	gml::show_debug_message("Sus value is " + to_string(val.getReal()));
+
+
+	GMLVar args[] = { 100000 , "sus", 1000 };
+	gml::call_function("variable_instance_set", args);
+
+	GMLVar val2 = gml::variable_instance_get(100000, "sus");
+	gml::show_debug_message("Sus value is " + to_string(val2.getReal()));
 	return true;
 }
 
